@@ -1,0 +1,10 @@
+{
+"wifi_ssid": "YOURSSID",
+"wifi_pass": "YOUR_PASSWORD",
+"topic1": "YOUR_MQTTT_TOPIC",
+"topic2": "YOUR_MQTT_TOPIC",
+"mqtt_id": "NAME_FOR_DEVICE",
+"mqtt_server": "MQTT_SERVER_IP_OR_HOST",
+"mqtt_user": "MQTT_USERNAME",
+"mqtt_pass": "MQTT_PASSWORD"
+}

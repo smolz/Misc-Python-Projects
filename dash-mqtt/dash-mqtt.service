@@ -1,0 +1,10 @@
+[Unit]
+Description=dash-mqtt
+After=network.target
+
+[Service]
+ExecStart=/misc/dash-mqtt/mqtt-dash.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
