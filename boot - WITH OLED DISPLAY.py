@@ -25,6 +25,7 @@ import gc
 import machine
 import jsonconfig  # Import jsonconfig.py file
 import ssd1306
+import time
 import esp
 esp.osdebug(None)
 
@@ -56,6 +57,8 @@ def do_connect():
     oled.text('GW:' + sta_if.ifconfig()[2], 0, 16)
     oled.text('DNS:' + sta_if.ifconfig()[3], 0, 24)
     oled.show()
+    time.sleep(6)
+
 
 
 # ---End Wifi Config---
