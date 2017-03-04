@@ -202,5 +202,5 @@ class BME280:
 
         hi = h // 1024
         hd = h * 100 // 1024 - hi * 100
-        return ("{0:.2f} F".format(tF), "{}.{:02d} hPa".format(pi, pd),
-                "{}.{:02d} %".format(hi, hd))
+        return ("{0:.2f}".format(tF), "{}.{:02d}".format(pi, pd),   # Removed the "F", "hPa" and "%"
+                "{}.{:02d}".format(hi, hd))

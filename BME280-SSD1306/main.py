@@ -32,8 +32,14 @@ import jsonconfig
 
 config = jsonconfig.config()
 
-topic1 = b"config['topic1']"
-topic2 = b"config['topic2']"
+mqtt_id = config['mqtt_id']
+mqtt_user = config['mqtt_user']
+mqtt_pass = config['mqtt_pass']
+mqtt_server = config['mqtt_server']
+
+topic1 = config['topic1']
+topic2 = config['topic2']
+topic3 = config['topic3']
 i2c = machine.I2C(scl=machine.Pin(5), sda=machine.Pin(4))
 bme = bme280.BME280(i2c=i2c)
 oled = ssd1306.SSD1306_I2C(128, 32, i2c)
@@ -49,13 +55,13 @@ def tem_hum_press():
 
 def mqtt_pub(topic, data=None):
     try:
-        client = MQTTClient(client_id="config['mqtt_id']", server="config['mqtt_server']", user="config['mqtt_user']",
-                            password="config['mqtt_pass']", port=1883)
+        client = MQTTClient(client_id=mqtt_id, server=mqtt_server, user=mqtt_user, password=mqtt_pass)
         client.connect()
         client.publish(topic, data)
         time.sleep_ms(200)
         client.disconnect()
     except Exception as e:
+        print("Exception: " + e)
         pass
 
 
@@ -63,13 +69,15 @@ def main():
     while True:
             t, p, h = tem_hum_press()
             oled.fill(0)
-            oled.text(t, 0, 0)
-            oled.text(p, 0, 10)
-            oled.text(h, 0, 20)
+            oled.text("Temp: " + t + " F", 0, 0)
+            oled.text("P: " + p + " hPa", 0, 10)
+            oled.text("Hum: " + h + " %", 0, 20)
             oled.show()
             mqtt_pub(topic1, str(t))
             mqtt_pub(topic2, str(h))
-            time.sleep(5)
-
-if __name__ == '__main__':
-    main()
+            mqtt_pub(topic3, str(p))
+            time.sleep(60)
+            oled.fill(0)
+            oled.show()
+            time.sleep(540)
+main()

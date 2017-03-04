@@ -16,7 +16,7 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ky* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
@@ -26,6 +26,7 @@ import machine
 import jsonconfig  # Import jsonconfig.py file
 import ssd1306
 import time
+# import webrepl
 import esp
 esp.osdebug(None)
 
@@ -43,12 +44,13 @@ def do_connect():
     if not sta_if.isconnected():
         print('connecting to network...')
         oled.fill(0)
-        oled.text("Connecting to network...", 0, 0)
+        oled.text("Connecting ", 0, 0)
+        oled.text("to network...", 0, 10)
         oled.show()
         sta_if.active(True)
         sta_if.connect(wifi_ssid, wifi_pass)
         while not sta_if.isconnected():
-            machine.idle()
+            pass
     print('network config:', sta_if.ifconfig())
     oled.fill(0)
     oled.text('IP:' + sta_if.ifconfig()[0], 0, 0)
@@ -63,4 +65,5 @@ def do_connect():
 # ---End Wifi Config---
 
 gc.collect()
+# webrepl.start()
 do_connect()
